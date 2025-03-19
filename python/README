@@ -1,0 +1,46 @@
+# Descargar ssd1306.py
+wget https://raw.githubusercontent.com/stlehmann/micropython-ssd1306/master/ssd1306.py
+
+# Instalar
+ampy --port /dev/ttyUSB0 put ssd1306.py
+
+## Comandos
+
+1. Detectar el chip y su memoria:
+flash_id: Obtiene información sobre el chip y la memoria flash del dispositivo.
+
+esptool.py --port /dev/ttyUSB0 flash_id
+
+2. Borrar la memoria flash:
+erase_flash: Borra completamente la memoria flash.
+esptool.py --port /dev/ttyUSB0 erase_flash
+
+3. Flashear (grabar) firmware en el ESP32:
+write_flash: Graba un archivo de firmware en la memoria flash.
+esptool.py --port /dev/ttyUSB0 write_flash 0x1000 firmware.bin
+Nota: Cambia firmware.bin por el nombre de tu archivo de firmware.
+
+4. Leer la memoria flash:
+read_flash: Lee la memoria flash y la guarda en un archivo.
+esptool.py --port /dev/ttyUSB0 read_flash 0x1000 0x100000 flash_dump.bin
+Esto leerá desde la dirección 0x1000 hasta 0x101000 y guardará el resultado en el archivo flash_dump.bin.
+
+5. Comprobar el estado del chip:
+chip_id: Muestra información sobre el chip conectado.
+esptool.py --port /dev/ttyUSB0 chip_id
+
+6. Borrar la partición de la memoria:
+erase_region: Borra una sección específica de la memoria flash.
+esptool.py --port /dev/ttyUSB0 erase_region 0x1000 0x100000
+
+7. Subir código de arranque (bootloader):
+write_bootloader: Graba el bootloader en la memoria del ESP32.
+esptool.py --port /dev/ttyUSB0 write_bootloader 0x1000 bootloader.bin
+
+8. Verificar el estado de la memoria (flash check):
+flash_check: Verifica la integridad de la memoria flash.
+esptool.py --port /dev/ttyUSB0 flash_check
+
+9. Reiniciar el ESP32:
+reset: Reinicia el ESP32 sin borrar ni modificar nada.
+esptool.py --port /dev/ttyUSB0 reset
